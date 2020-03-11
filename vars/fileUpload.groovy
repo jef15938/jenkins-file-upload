@@ -15,7 +15,7 @@ def call(String url, File file, String targetPath){
 
       def content = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE)
       content.addPart("file", new InputStreamBody(file.newInputStream(), file.name))
-      content.addPart("targetPath",new StringBody(targetPath,Charset.forName("UTF-8")))
+      content.addPart("targetPath",new StringBody(targetPath,org.apache.http.entity.ContentType.TEXT_PLAIN))
       req.entity = content
 
       // json might be something else (like a reader) 
