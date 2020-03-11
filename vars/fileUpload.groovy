@@ -6,6 +6,7 @@ import org.apache.http.entity.mime.*
 import groovyx.net.http.HTTPBuilder
 import static groovyx.net.http.Method.POST
 
+@NonCPS
 def call(String url, File file, String targetPath){
   println "doPost: $url body: ${file.name}"
   def result 
