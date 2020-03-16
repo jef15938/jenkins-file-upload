@@ -7,7 +7,7 @@ import groovyx.net.http.HTTPBuilder
 import static groovyx.net.http.Method.POST
 
 @NonCPS
-def call(String url, File file, String targetPath, Boolean isNeedUnzip){
+def call(String url, File file, String targetPath, String isNeedUnzip){
   println "doPost: $url body: ${file.name}"
   def result 
   try {
@@ -16,8 +16,8 @@ def call(String url, File file, String targetPath, Boolean isNeedUnzip){
 
       def content = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE)
       content.addPart("file", new InputStreamBody(file.newInputStream(), file.name))
-      content.addPart("targetPath", new StringBody(targetPath,org.apache.http.entity.ContentType.TEXT_PLAIN))
-      content.addPart("isNeedUnzip", isNeedUnzip)
+      content.addPart("targetPath", new StringBody(targetPath, org.apache.http.entity.ContentType.TEXT_PLAIN))
+      content.addPart("isNeedUnzip", new StringBody(isNeedUnzip, org.apache.http.entity.ContentType.TEXT_PLAIN))
       req.entity = content
 
       // json might be something else (like a reader) 
