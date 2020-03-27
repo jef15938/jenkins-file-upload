@@ -17,7 +17,7 @@ def call(String url, File file, String targetPath, Boolean isNeedUnzip){
       def content = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE)
       content.addPart("file", new InputStreamBody(file.newInputStream(), file.name))
       content.addPart("targetPath", new StringBody(targetPath, org.apache.http.entity.ContentType.TEXT_PLAIN))
-      content.addPart("isNeedUnzip", new StringBody(isNeedUnzip.toString(), org.apache.http.entity.ContentType.TEXT_PLAIN))
+      content.addPart("isZip", new StringBody(isNeedUnzip.toString(), org.apache.http.entity.ContentType.TEXT_PLAIN))
       req.entity = content
 
       // json might be something else (like a reader) 
