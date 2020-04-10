@@ -1,9 +1,9 @@
 import groovy.json.JsonOutput;
 
 @NonCPS
-def call(){
+def call(String executeJobName){
     def builder = new groovy.json.JsonBuilder();
-    def configJson = """
+    def configString = """
         {
             "jobs": 
             [   
@@ -18,5 +18,19 @@ def call(){
         }
     """;
     def parser = new groovy.json.JsonSlurper()
-    parser.parseText(configJson)
+    def json = parser.parseText(configString);
+    def resultNode = '';
+
+    json.jobs.each {
+        if(it.jobName == executeJobName) {
+            resultNode = it.nodeName;
+        }
+    }
+
+    if(resultNode == '') {
+        resultNode = 'master';
+    }
+
+    resultNode;
+
 }
