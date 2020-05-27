@@ -1,7 +1,9 @@
 import groovy.json.JsonOutput;
 
 @NonCPS
-def call(String executeJobName){
+def call(String executeJobName, Object parameter = []){
+    echo "parameter: ${parameter}";
+    echo "parameter.testEnvironment: ${parameter.testEnvironment}" ;
     def builder = new groovy.json.JsonBuilder();
     def configString = """
         {
