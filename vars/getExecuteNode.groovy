@@ -2,8 +2,9 @@ import groovy.json.JsonOutput;
 
 @NonCPS
 def call(String executeJobName, Object parameter = []){
-    echo "!!parameter: ${!!parameter}";
-    echo "!!parameter.testEnvironment: ${!!parameter.testEnvironment}" ;
+    echo "lib executeJobName: ${executeJobName}";
+    echo "lib parameter: ${parameter}" ;
+    def testEnvironment = parameter.testEnvironment;
     def builder = new groovy.json.JsonBuilder();
     def configString = """
         {
@@ -15,7 +16,8 @@ def call(String executeJobName, Object parameter = []){
                 {"jobName": "SND_Frontend_Downgrade", "nodeName": "SND_Jenkins"},
 
                 {"jobName": "SND_Frontend_Build_Web", "nodeName": "SND_Jenkins"},
-                {"jobName": "SND_Frontend_E2E_Test", "nodeName": "SND_Jenkins"}
+                {"jobName": "SND_Frontend_E2E_Test", "nodeName": "SND_Jenkins", "testEnvironment": "實體機"},
+                {"jobName": "SND_Frontend_E2E_Test", "nodeName": "E2E_Docker", "testEnvironment": "Docker"}
             ]
         }
     """;
@@ -25,7 +27,14 @@ def call(String executeJobName, Object parameter = []){
 
     json.jobs.each {
         if(it.jobName == executeJobName) {
-            resultNode = it.nodeName;
+            if(!!it.testEnvironment && !!testEnvironment) {
+                if(it.testEnvironment == testEnvironment) {
+                    resultNode = it.nodeName;
+                }
+            }
+            else {
+                resultNode = it.nodeName;
+            }
         }
     }
 
@@ -33,6 +42,7 @@ def call(String executeJobName, Object parameter = []){
         resultNode = 'master';
     }
 
+    each "lib return resultNode: ${resultNode}";
     resultNode;
 
 }
