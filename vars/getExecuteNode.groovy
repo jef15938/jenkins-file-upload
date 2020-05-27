@@ -42,7 +42,7 @@ def call(String executeJobName, Object parameter = []){
         resultNode = 'master';
     }
 
-    each "lib return resultNode: ${resultNode}";
+    echo "lib return resultNode: ${resultNode}";
     resultNode;
 
 }
