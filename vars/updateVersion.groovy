@@ -19,6 +19,8 @@ def call(String url, String version, String platform, String downloadLink){
       content.addPart("deviceSystem", new StringBody(platform, org.apache.http.entity.ContentType.TEXT_PLAIN))
       content.addPart("appLink", new StringBody(downloadLink, org.apache.http.entity.ContentType.TEXT_PLAIN))
       content.addPart("isEnabled", new StringBody('Y', org.apache.http.entity.ContentType.TEXT_PLAIN))
+      content.addPart("description", new StringBody(version, org.apache.http.entity.ContentType.TEXT_PLAIN))
+
       req.entity = content
 
       // json might be something else (like a reader) 
